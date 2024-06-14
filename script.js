@@ -1,17 +1,4 @@
 window.onload = () => {
-  
-  const songs = [
-    {
-      "name" : "Faded",
-      "artist" : "Alan Walker",
-      "id" : "hu1bh2ubj2o1ej2"
-    },
-    {
-      "name" : "Alone",
-      "artist" : "Alan Walker",
-      "id" : "niajhwuo2huo2h"
-    }
-  ];
  // Hold an instance of a db object for us to store the IndexedDB data in
   let db;
 
@@ -22,6 +9,21 @@ window.onload = () => {
   DBOpenRequest.onerror = (event) => {
     console.log("db cant init");
   };
+
+  
+const songs = [
+  {
+    "name" : "Unsure",
+    "artist" : "Alan Walker",
+    "id" : "j21h3412g41341h"
+  },
+  {
+    "name" : "Alone pt.2",
+    "artist" : "Alan Walker",
+    "id" : "nuio21hu2ih3uy1i"
+  }
+];
+
 
   DBOpenRequest.onsuccess = (event) => {
     console.log("DB init");
@@ -36,7 +38,7 @@ window.onload = () => {
       console.log("tran imcomplete");
     };
 
-    const lolz = transaction.get("hu1bh2ubj2o1ej2");
+    const lolz = transaction.get("nuio21hu2ih3uy1i");
 
     lolz.onsuccess = () => {
       console.log(lolz.result);
@@ -45,6 +47,33 @@ window.onload = () => {
     lolz.onerror = () => {
       console.log("fuck u ");
     };
+
+    const addbtn = document.getElementById("addBtn");
+
+    addbtn.addEventListener("click", () => {
+      addData();
+      console.log("event listener added to the button!");
+    });
+  };
+
+  const addData = async () => {
+    const transaction = db.transaction("songs", "readwrite");
+    const objectStore = transaction.objectStore("songs");
+  
+    transaction.oncomplete = () => {
+      console.log("Adding data complete!");
+    };
+  
+    transaction.onerror = async (error) =>{
+      console.log(error);
+    };  
+  
+    songs.forEach((e) => {
+     const req =  objectStore.add(e);
+     req.onsuccess  = () => {
+      console.log("request complete, data has been added!");
+     };
+    });
   };
 
   DBOpenRequest.onupgradeneeded = (event) => {
@@ -68,3 +97,4 @@ window.onload = () => {
     
   };  
 };
+
