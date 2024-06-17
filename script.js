@@ -1,4 +1,4 @@
-window.onload = () => {
+
  // Hold an instance of a db object for us to store the IndexedDB data in
   let db;
 
@@ -96,5 +96,5 @@ const songs = [
 
     
   };  
-};
+
 
